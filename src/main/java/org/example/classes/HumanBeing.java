@@ -23,6 +23,11 @@ public class HumanBeing implements Comparable<HumanBeing>{
         id = IDGen.gen(String.valueOf(creationDate));
     }
 
+    public HumanBeing(int i, String john, Coordinates coordinates, Date date, boolean b, boolean b1, long l, String songA, WeaponType weaponType, Mood mood, Car bmw) {
+    }
+
+    public HumanBeing(int i, String alice, Coordinates coordinates, Date date, boolean b, boolean b1, Long o, String songB, WeaponType weaponType, Mood mood, Car audi) {
+    }
 
 
     public int getId() {

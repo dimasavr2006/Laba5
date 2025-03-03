@@ -2,21 +2,32 @@ package org.example.collections;
 
 import org.example.classes.*;
 import org.example.enums.*;
+import org.example.exceptions.NullStringException;
 import org.example.functions.*;
+import org.example.utils.EnvFileReader;
 
-import java.time.ZonedDateTime;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 public class CollectionManager{
-    ZonedDateTime initialazed;
-    public ArrayList<HumanBeing> collection;
+
+    LocalDateTime initialazed;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd:MM:yyyy HH:mm:ss");
+    String timeOfCreation;
+
+    public static ArrayList<HumanBeing> collection;
+
     public CollectionManager() {
-        initialazed = ZonedDateTime.now();
+        initialazed = LocalDateTime.now();
+        timeOfCreation = initialazed.format(formatter);
+
         collection = new ArrayList<>();
     }
 
     public void info(){
-        String s = "Тип коллекции: " + collection.getClass() + ", Время создания: " + initialazed + ", Размер коллекции: " + collection.size();
+        String s = "Тип коллекции: " + collection.getClass() + ", Время создания: " + timeOfCreation + ", Размер коллекции: " + collection.size();
         System.out.println(s);
     }
     public void add(HumanBeing hb){
@@ -47,8 +58,10 @@ public class CollectionManager{
     public void clear(){
         collection.clear();
     }
-    public void saveToFile(){
-        // реализация
+    public void saveToFile(String way){
+//        JsonParser.jsonToCollection(way);
+
+
     }
     public void executeScriptFromFilename(){
         // реализация
@@ -97,6 +110,37 @@ public class CollectionManager{
         return collection.size() - count;
     }
 
+    public void readEnv(){
+        try {
+            String way = System.getenv("FILE_NAME");
+//            String way = "C:\\Users\\dimas\\IdeaProjects\\Laba5\\src\\main\\jsonF\\input.json";
+            if (way == null || way.isEmpty()) {
+                throw new NullStringException();
+            }
+
+            ArrayList<HumanBeing> startCollection = collection;
+//            ArrayList<HumanBeing> endCollection = JsonParser.jsonToCollection(way);
+
+//            startCollection.addAll(endCollection);
+
+            collection = startCollection;
+
+            System.out.println("Коллекция из переменной среды загружена!");
+
+        } catch (NullStringException e) {
+            System.out.println("Если вы хотите считать переменную среды, то запустите программу с другими данными");
+        }
+    }
+/** Конечное чтение файла*/
+    public void readJson(String fileName){
+        ArrayList<HumanBeing> startCollection = collection;
+        EnvFileReader envFileReader = new EnvFileReader();
+        ArrayList<HumanBeing> endCollection = envFileReader.readData();
+        startCollection.addAll(endCollection);
+        collection = startCollection;
+    }
+
+
     public ArrayList<HumanBeing> getCollection() {
         return collection;
     }
@@ -118,7 +162,19 @@ public class CollectionManager{
         return result;
     }
 
-    public ZonedDateTime getInitialazed() {
+    public LocalDateTime getInitialazed() {
         return initialazed;
+    }
+
+    public void setInitialazed(LocalDateTime initialazed) {
+        this.initialazed = initialazed;
+    }
+
+    public String getTimeOfCreation() {
+        return timeOfCreation;
+    }
+
+    public void setTimeOfCreation(String timeOfCreation) {
+        this.timeOfCreation = timeOfCreation;
     }
 }
