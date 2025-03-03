@@ -26,7 +26,7 @@ public class HumanBeing implements Comparable<HumanBeing>{
     public HumanBeing(int i, String john, Coordinates coordinates, Date date, boolean b, boolean b1, long l, String songA, WeaponType weaponType, Mood mood, Car bmw) {
     }
 
-    public HumanBeing(int i, String alice, Coordinates coordinates, Date date, boolean b, boolean b1, Long o, String songB, WeaponType weaponType, Mood mood, Car audi) {
+    public HumanBeing(int i, String alice, org.example.classes.Coordinates coordinates, Date date, boolean b, boolean b1, Long o, String songB, org.example.enums.WeaponType weaponType, org.example.enums.Mood mood, org.example.classes.Car audi) {
     }
 
 
